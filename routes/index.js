@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const logAnalyzer = require('../utils/logAnalyzer');
 
 // Home page - Dashboard
 router.get('/', (req, res) => {
-    const stats = global.logAnalyzer.getStats();
+    const logs = global.logStorage.getLogs({ limit: 10000 });
+    const stats = logAnalyzer.getStatistics(logs);
     res.render('index', {
         title: 'Dashboard - LogScope',
         page: 'dashboard',
